@@ -57,7 +57,7 @@ const ExtraPoke = () => {
             <div className="flex flex-col bg-gray-400 p-5 rounded-xl lg:w-full">
                 <p className="font-bold text-center mb-4">Moves</p>
                 <div className="grid grid-cols-3 gap-2 md:grid-cols-4 lg:grid-cols-5">
-                    {location.props.info.moves.map((move, index) => <span key={index} className="capitalize text-white bg-green-400 rounded-lg text-center p-1">{move.move.name}</span>)}
+    {location.props.info.moves.length > 0 ? location.props.info.moves.map((move, index) => <span key={index} className="capitalize text-white bg-green-400 rounded-lg text-center p-1">{move.move.name}</span>) : <p>Apparently, <b>{location.props.info.name}</b>doesn't have any moves 🤭</p>}
                 </div>
             </div>
             <div className="flex flex mt-3 justify-between lg:col-span-2">
