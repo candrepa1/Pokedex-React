@@ -10,6 +10,7 @@ const Filters = () => {
 
     const onSubmitByType = (data, event) => {
         setByType(data.byType);
+        event.target.reset();
     } 
 
     useEffect(() => {

@@ -55,7 +55,42 @@ const FilterChosen = ({ name }) => {
             setStartPages(startPages => startPages - 1);
             setEndPages(endPages => endPages - 1);
         }
-        
+    }
+
+    const handleClick = (selectedPage) => {
+        setStart(4 * (selectedPage - 1));
+        setEnd(4 * selectedPage);
+        const moveNum = Math.floor((endPages + startPages)/2);
+        if(selectedPage > moveNum) {
+            console.log(moveNum, startPages, pageNumber, selectedPage, endPages);
+            setPageNumber(selectedPage);
+            if(endPages === allPages.length) {
+                return null;
+            } else {
+                if((selectedPage - pageNumber) > (allPages.length - endPages)) {
+                    setStartPages(startPages => startPages + (allPages.length - selectedPage));
+                    setEndPages(endPages => endPages + (allPages.length - selectedPage));
+                } else if((selectedPage - pageNumber) <= (allPages.length - endPages)) {
+                    setStartPages(startPages => startPages + (selectedPage - moveNum));
+                    setEndPages(endPages => endPages + (selectedPage - moveNum));
+                }
+            }
+        } else if(selectedPage < moveNum) {
+            setPageNumber(selectedPage);
+            if(startPages === 0) {
+                return null;
+            } else {
+                if((pageNumber - selectedPage) > (startPages - 0)) {
+                    setStartPages(startPages => startPages -(startPages - 0));
+                    setEndPages(endPages => endPages - (endPages - 10));
+                } else if((pageNumber - selectedPage) <= (startPages - 0)){
+                    setStartPages(startPages => startPages -(pageNumber - selectedPage));
+                    setEndPages(endPages => endPages - (pageNumber - selectedPage));
+                }
+            }
+        } else {
+            setPageNumber(selectedPage);
+        }
     }
 
     return(
@@ -70,8 +105,7 @@ const FilterChosen = ({ name }) => {
                     </svg></button> : null}
                 </div>
                 {allPages && allPages.slice(startPages, endPages).map((item, index) => {
-                return item === pageNumber ? <div key={index} className="mb-2 bg-black text-white border-2 border-black rounded-full h-10 w-10 flex items-center justify-center mr-2"> <p>{item}</p> </div>: <div key={index}className="mb-2 bg-white text-black border-2 border-black rounded-full h-10 w-10 flex items-center justify-center mr-2">
-                <p>{item}</p></div>})
+                return item === pageNumber ? <button onClick={() => handleClick(item)} key={index} className="mb-2 bg-black text-white border-2 border-black rounded-full h-10 w-10 flex items-center justify-center mr-2">{item}</button>: <button onClick={() => handleClick(item)} key={index} className="mb-2 bg-white text-black border-2 border-black rounded-full h-10 w-10 flex items-center justify-center mr-2">{item}</button>})
                 } 
                 {pageNumber !== allPages.length && info.length > 0 ? <button onClick={handleNextClick}><svg className="w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M11.933 12.8a1 1 0 000-1.6L6.6 7.2A1 1 0 005 8v8a1 1 0 001.6.8l5.333-4zM19.933 12.8a1 1 0 000-1.6l-5.333-4A1 1 0 0013 8v8a1 1 0 001.6.8l5.333-4z" />
