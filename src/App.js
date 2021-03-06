@@ -12,7 +12,6 @@ import { useAuth } from './components/provider/AuthProvider.js';
 
 function App() {
   const { user } = useAuth();
-  console.log(user);
 
   return (
       <Router>
